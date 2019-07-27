@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Giphy API</title>
+</head>
+
+<body>
+    <input type="text" id="userInput"><button id="submit">submit</button>
+    <div id="buttonsHere"></div>
+    <div id="resultsHere"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        //things to do: 
+
+
+        // Add a form to your page that takes a value from a user input box and adds it to your `topics` array. Then make a function call that takes each topic in the array and remakes the buttons on the page.
+
+        var topics = ["Miami", "Fort Lauderdale", "Palm Beach", "Florida"]
+        // Example queryURL for Giphy API
+        var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=BkaUZZWcFij6J7AoQj3WtPb1R2p9O6V9";
+        var newButtons = function () {
+            $("#buttonsHere").empty()
+            for (i = 0; i < topics.length; i++) {
+                console.log(topics[i])
+                $("#buttonsHere").prepend('<button class="gifButton" id="' + (topics[i].replace(/\s+/g, '')) + '">' + topics[i] + "</button>");
+
+            }
+        }
+
+
+        $("#submit").on("click", function () {
+            userInput = $("#userInput").val()
+            console.log(userInput)
+            topics.push(userInput)
+            newButtons()
+        })
+
+        for (i = 0; i < topics.length; i++) {
+            console.log(topics[i])
+            $("#buttonsHere").prepend('<button class="gifButton" id="' + (topics[i].replace(/\s+/g, '')) + '">' + topics[i] + "</button>");
+        }
+
+        $(document).on("click", (".gifButton"), function () {
+
+            var id = $(this).attr("id")
+            console.log(id)
+            var resultDiv = $("<div>")
+            $.ajax({
+                url: queryURL + "&q=" + id + "&limit=10&offset=0&lang=en",
+                method: "GET"
+            }).then(function (response) {
+                var data = response.data;
+                console.log(data)
+
+                //looping through response data
+                for (var i = 0; i < data.length; i++) {
+                    var resultDiv = $("<div>")
+                    var p = $("<p>").text("Rating: " + data[i].rating);
+                    var resultImage = $("<img>");
+                    resultImage.attr("src", data[i].images.fixed_height.url);
+                    resultDiv.append(p);
+                    resultDiv.append(resultImage);
+                    $("#resultsHere").prepend(resultDiv)
+                }
+
+
+            });
+        })
+
+
+
+
+    </script>
+
+</body>
+
+</html>

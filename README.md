@@ -1,6 +1,8 @@
 # GiphySearch
 
-GiphySearch is a simple, client-side jQuery-based webapp that has an existing set of buttons (based on a pre-built array) that make requests to the GIPHY API. There is also an input field for the user to create their own buttons and make their own searches to the GIPHY API.
+GiphySearch is a simple, client-side jQuery-based single page webapp that has an existing set of buttons (based on a pre-built array) that make requests to the GIPHY API. 
+
+There is also an input field for the user to create their own buttons and make their own searches to the GIPHY API.
 
 ## Usage
 
